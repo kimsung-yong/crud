@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.BoardMapper">
+
+    <select id="total" resultType="int">
+        select count(*) from tbl_board where bno > 0
+    </select>
+
+    <select id="list" resultType="vo.BoardVO">
+        select @rownum:=@rownum+1,a.bno,a.typeno,a.title,a.content,a.writer,a.regdate,a.updatedate from tbl_board a, (select @rownum:=0) b where bno>0
+    </select>
+
+    <insert id="insert">
+        insert into tbl_board(typeno,title,content,writer) value(${typeno},#{title},#{content},#{writer})
+    </insert>
+
+    <update id="update">
+        update tbl_board set typeno = #{typeno},title = #{title},content = #{content}  where bno = ${bno}
+    </update>
+
+    <delete id="delete">
+        delete from tbl_board where bno = ${bno}
+    </delete>
+</mapper>

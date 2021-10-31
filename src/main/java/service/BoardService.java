@@ -1,15 +1,16 @@
 package service;
 
-import VO.BoardVO;
-import org.springframework.stereotype.Service;
+import vo.BoardVO;
 
 import java.util.List;
 
 
 public interface BoardService {
 
-    public List<BoardVO> list();
-    public int insert();
-    public int modify();
+    public List<BoardVO> readList();
+    public int totalCount();
+    public int regester(BoardVO vo);
+    public int modify(BoardVO vo);
+    public int remove(int bno);
 
 }
