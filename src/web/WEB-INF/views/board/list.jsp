@@ -384,44 +384,101 @@
             <!-- /.col-lg-12 -->
         </div>
         <!-- /.row -->
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        DataTables Advanced Tables
-                    </div>
-                    <!-- /.panel-heading -->
-                    <div class="panel-body">
-                        <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
-                            <thead>
-                            <tr>
-                                <th>번호</th>
-                                <th>제목</th>
-                                <th>작성자</th>
-                                <th>작성 시간</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <c:forEach items="${boardList}" var="list">
-                                <tr class="odd gradeX">
-                                    <td><c:out value="${list.rnum}"/> </td>
-                                    <td><c:out value="${list.title}"/></td>
-                                    <td><c:out value="${list.writer}"/></td>
-                                    <td class="center"><c:out value="${list.updatedate}"/></td>
-                                </tr>
-                            </c:forEach>
 
-                            </tbody>
-                        </table>
-                        <!-- /.table-responsive -->
+            <table width="100%" class="table table-striped table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>작성 시간</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${boardList}" var="list">
+                    <tr class="odd gradeX">
+                        <td><c:out value="${list.rnum}"/> </td>
+                        <td><c:out value="${list.title}"/></td>
+                        <td><c:out value="${list.writer}"/></td>
+                        <td class="center"><c:out value="${list.updatedate}"/></td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
 
-                    </div>
-                    <!-- /.panel-body -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <form id="searchForm" action="/board/list" method="get" style="float: right">
+                        <select name="type">
+                            <option value="" <c:out value="${pageMaker.cri.type == null ?'selected' : ''}"/> >
+                                --
+                            </option>
+                            <option value="T" <c:out value="${pageMaker.cri.type eq 'T' ?'selected' : ''}"/>>
+                                제목
+                            </option>
+                            <option value="C" <c:out value="${pageMaker.cri.type eq 'C' ?'selected' : ''}"/>>
+                                내용
+                            </option>
+                            <option value="C" <c:out value="${pageMaker.cri.type eq 'W' ?'selected' : ''}"/>>
+                                작성자
+                            </option>
+                            <option value="TC" <c:out value="${pageMaker.cri.type eq 'TC' ?'selected' : ''}"/>>
+                                제목 내용
+                            </option>
+                            <option value="TW" <c:out value="${pageMaker.cri.type eq 'TW' ?'selected' : ''}"/>>
+                                제목 작성자
+                            </option>
+                            <option value="TWC" <c:out
+                                    value="${pageMaker.cri.type eq 'TWC' ?'selected' : ''}"/>>제목 내용 작성자
+                            </option>
+                        </select>
+                        <input type="text" name="keyword" value="${pageMaker.cri.keyword}"/>
+                        <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
+                        <input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+                        <button class="btn btn-dark">검색</button>
+                    </form>
                 </div>
-                <!-- /.panel -->
+
+                <form id="actionForm" action="/board/list" method="get">
+                    <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
+                    <input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+                    <input type="hidden" name="type" value='<c:out value="${pageMaker.cri.type}"/>'>
+                    <input type="hidden" name="keyword" value='<c:out value="${pageMaker.cri.keyword}"/>'>
+                </form>
+            </div>
+
+            <div class="pull-right">
+                <ul class="lpagination" id="page_btn">
+                    <c:if test="${pageMaker.prev}">
+                        <li class="paginate_button previous"><a href="${pageMaker.realStart}"
+                                                                style="padding: 6px 12px">◀◀</a></li>
+                    </c:if>
+                    <c:if test="${pageMaker.prev}">
+                        <li class="paginate_button previous"><a href="${pageMaker.startPage -10}"
+                                                                style="padding: 6px 12px">◀</a></li>
+                    </c:if>
+                    <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+                        <%--                                            ${pageMaker.cri.pageNum = num ? "active":""}--%>
+                        <%--                                        ${pageMaker.cri.pageNum == num ? "active" : ""}--%>
+                        <%--                                            /board/list?pageNum=${num}--%>
+                        <li class="paginate_button ${pageMaker.cri.pageNum == num ? "active":""}">
+                            <a href="${num}" style="padding: 6px 12px">${num}</a>
+                        </li>
+                    </c:forEach>
+                    <c:if test="${pageMaker.next}">
+                        <li class="paginate_button next">
+                            <a href="${pageMaker.endPage +1}" style="padding: 6px 12px">▶</a>
+                        </li>
+                    </c:if>
+                    <c:if test="${pageMaker.next}">
+                        <li class="paginate_button next">
+                            <a href="${pageMaker.realEnd}" style="padding: 6px 12px">▶▶</a>
+                        </li>
+                    </c:if>
+                </ul>
+                <%----%>
             </div>
             <!-- /.col-lg-12 -->
-        </div>
     <!-- /#page-wrapper -->
     </div>
 </div>

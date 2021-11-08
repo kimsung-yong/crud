@@ -1,14 +1,15 @@
 package mapper;
 
 import vo.BoardVO;
+import vo.Criteria;
 
 import java.util.List;
 
 public interface BoardMapper {
 
-    public int total();
+    public int total(Criteria cri);
 
-    public List<BoardVO> list();
+    public List<BoardVO> list(Criteria cri);
 
     public int insert(BoardVO vo);
 

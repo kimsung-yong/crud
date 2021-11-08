@@ -7,6 +7,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import service.BoardService;
 import vo.BoardVO;
+import vo.Criteria;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -17,15 +18,15 @@ public class BoardServiceTests {
     @Setter(onMethod_ = @Autowired)
     BoardService service;
     @Test
-    public void testTotalService() {
-        log.info(service.totalCount());
-        assertNotNull(service.totalCount());
+    public void testTotalService(Criteria cri) {
+        log.info(service.totalCount(cri));
+        assertNotNull(service.totalCount(cri));
 
     }
     @Test
-    public void testListService(){
-        log.info(service.readList());
-        assertNotNull(service.readList());
+    public void testListService(Criteria cri){
+        log.info(service.readList(cri));
+        assertNotNull(service.readList(cri));
     }
     @Test
     public void testInsertService(){
@@ -56,7 +57,7 @@ public class BoardServiceTests {
     }
 
     @Test
-    public void testGetTotalService(){
-        log.info(service.totalCount());
+    public void testGetTotalService(Criteria cri){
+        log.info(service.totalCount(cri));
     }
 }

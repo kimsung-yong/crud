@@ -6,6 +6,7 @@ import java.util.Date;
 @Data
 public class BoardVO {
 
+    private int rnum;
     private int bno;
     private int typeno;
     private String title;

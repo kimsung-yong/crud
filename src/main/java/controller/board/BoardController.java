@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import service.BoardService;
+import vo.Criteria;
+import vo.PageDTO;
 
 @Controller
 @RequestMapping("board/*")
@@ -15,10 +17,10 @@ public class BoardController {
     BoardService service;
 
     @RequestMapping("list")
-    public ModelAndView list(){
-        ModelAndView mv = new ModelAndView();
-        int total = service.totalCount();
-        mv.addObject("boardList",service.readList());
+    public ModelAndView list(ModelAndView mv, Criteria cri){
+
+        mv.addObject("boardList",service.readList(cri));
+        mv.addObject("pageMaker",new PageDTO(cri,service.totalCount(cri)));
         mv.setViewName("board/list");
 
         return mv;

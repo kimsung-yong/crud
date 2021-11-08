@@ -7,6 +7,7 @@ import mapper.BoardMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.BoardService;
+import vo.Criteria;
 
 import java.util.List;
 @Log4j
@@ -16,13 +17,13 @@ public class BoardServiceImp implements BoardService {
     BoardMapper mapper;
 
     @Override
-    public List<BoardVO> readList() {
-        return mapper.list();
+    public List<BoardVO> readList(Criteria cri) {
+        return mapper.list(cri);
     }
 
     @Override
-    public int totalCount() {
-        return mapper.total();
+    public int totalCount(Criteria cri) {
+        return mapper.total(cri);
     }
 
     @Override

@@ -4,12 +4,47 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapper.BoardMapper">
 
+    <sql id="criteria">
+        <trim prefix="(" suffix=") AND " prefixOverrides="OR">
+            <foreach item="type" collection="typeArr">
+                <trim prefix="OR">
+                    <choose>
+                        <when test="type == 'T'.toString()">
+                            title like '%' || #{keyword} || '%'
+                        </when>
+                        <when test="type == 'C'.toString()">
+                            content like '%' || #{keyword} || '%'
+                        </when>
+                        <when test="type == 'W'.toString()">
+                            writer like '%' || #{keyword} || '%'
+                        </when>
+                    </choose>
+                </trim>
+            </foreach>
+        </trim>
+    </sql>
+
     <select id="total" resultType="int">
         select count(*) from tbl_board where bno > 0
     </select>
 
     <select id="list" resultType="vo.BoardVO">
-        select @rownum:=@rownum+1,a.bno,a.typeno,a.title,a.content,a.writer,a.regdate,a.updatedate from tbl_board a, (select @rownum:=0) b where bno>0
+        <![CDATA[
+            select rn as rnum,a2.title, a2.content, a2.writer, a2.regdate, a2.updatedate
+	            from
+                (select *
+                from(
+                    select @rnum := @rnum+1 as rn, a.title, a.content, a.writer, a.regdate, a.updatedate
+                    from (select @rnum :=0) b ,tbl_board a
+		)a1
+		        where
+        ]]>
+        <include refid="criteria"></include>
+        <![CDATA[
+                rn <= #{pageNum} * #{amount}
+            )a2
+            where rn > (#{pageNum} - 1) * #{amount}
+        ]]>
     </select>
 
     <insert id="insert">
