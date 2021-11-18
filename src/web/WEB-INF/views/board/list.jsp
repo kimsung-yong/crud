@@ -14,23 +14,23 @@
     <title>SB Admin 2 - Bootstrap Admin Theme</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="<c:url value="${pageContext.request.contextPath}/resources/vendor/bootstrap/css/bootstrap.min.css"/>" rel="stylesheet">
+    <link href="<c:url value="/web/resources/vendor/bootstrap/css/bootstrap.min.css"/>" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
     <%--<link href="../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">--%>
-    <link href="<c:url value="${pageContext.request.contextPath}/resources/vendor/metisMenu/metisMenu.min.css"/>" rel="stylesheet">
+    <link href="<c:url value="/web/resources/vendor/metisMenu/metisMenu.min.css"/>" rel="stylesheet">
 
     <!-- DataTables CSS -->
-    <link href="<c:url value="${pageContext.request.contextPath}/resources/vendor/datatables-plugins/dataTables.bootstrap.css"/>" rel="stylesheet">
+    <link href="<c:url value="/web/resources/vendor/datatables-plugins/dataTables.bootstrap.css"/>" rel="stylesheet">
 
     <!-- DataTables Responsive CSS -->
-    <link href="<c:url value="${pageContext.request.contextPath}/resources/vendor/datatables-responsive/dataTables.responsive.css"/>" rel="stylesheet">
+    <link href="<c:url value="/web/resources/vendor/datatables-responsive/dataTables.responsive.css"/>" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="<c:url value="${pageContext.request.contextPath}/resources/dist/css/sb-admin-2.css"/>" rel="stylesheet">
+    <link href="<c:url value="/web/resources/dist/css/sb-admin-2.css"/>" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="<c:url value="${pageContext.request.contextPath}/resources/vendor/font-awesome/css/font-awesome.min.css"/>" rel="stylesheet" type="text/css">
+    <link href="<c:url value="/web/resources/vendor/font-awesome/css/font-awesome.min.css"/>" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -38,6 +38,7 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
 
 </head>
 
@@ -437,6 +438,7 @@
                         <input type="hidden" name="amount" value="${pageMaker.cri.amount}">
                         <button class="btn btn-dark">검색</button>
                     </form>
+                        <button class="btn btn-dark" id="regist">글작성</button>
                 </div>
 
                 <form id="actionForm" action="/board/list" method="get">
@@ -444,6 +446,10 @@
                     <input type="hidden" name="amount" value="${pageMaker.cri.amount}">
                     <input type="hidden" name="type" value='<c:out value="${pageMaker.cri.type}"/>'>
                     <input type="hidden" name="keyword" value='<c:out value="${pageMaker.cri.keyword}"/>'>
+                </form>
+
+                <form id="registForm" action="/board/get" method="post">
+
                 </form>
             </div>
 
@@ -485,29 +491,44 @@
 <!-- /#wrapper -->
 
 <!-- jQuery -->
-<script src="<c:url value="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"/>"></script>
+<script src="<c:url value="/web/resources/vendor/jquery/jquery.min.js"/>"></script>
 
 <!-- Bootstrap Core JavaScript -->
-<script src="<c:url value="${pageContext.request.contextPath}/resources/vendor/bootstrap/js/bootstrap.min.js"/>"></script>
+<script src="<c:url value="/web/resources/vendor/bootstrap/js/bootstrap.min.js"/>"></script>
 
 <!-- Metis Menu Plugin JavaScript -->
-<script src="<c:url value="${pageContext.request.contextPath}/resources/vendor/metisMenu/metisMenu.min.js"/>"></script>
+<script src="<c:url value="/web/resources/vendor/metisMenu/metisMenu.min.js"/>"></script>
 
 <!-- DataTables JavaScript -->
-<script src="<c:url value="${pageContext.request.contextPath}/resources/vendor/datatables/js/jquery.dataTables.min.js"/>"></script>
-<script src="<c:url value="${pageContext.request.contextPath}/resources/vendor/datatables-plugins/dataTables.bootstrap.min.js"/>"></script>
-<script src="<c:url value="${pageContext.request.contextPath}/resources/vendor/datatables-responsive/dataTables.responsive.js"/>"></script>
+<script src="<c:url value="/web/resources/vendor/datatables/js/jquery.dataTables.min.js"/>"></script>
+<script src="<c:url value="/web/resources/vendor/datatables-plugins/dataTables.bootstrap.min.js"/>"></script>
+<script src="<c:url value="/web/resources/vendor/datatables-responsive/dataTables.responsive.js"/>"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="<c:url value="${pageContext.request.contextPath}/resources/dist/js/sb-admin-2.js"/>"></script>
+<script src="<c:url value="/web/resources/dist/js/sb-admin-2.js"/>"></script>
 
 <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+
 <script>
     $(document).ready(function() {
+        var action = $("#actionForm");
         $('#dataTables-example').DataTable({
             responsive: true
         });
+
+        $('#regist').on("click",function (){
+           $("#registForm").submit();
+        });
+
+        $('.paginate_button a').on("click",function (e){
+
+            e.preventDefault();
+            action.find("input[name='pageNum']").val($(this).attr("href"));
+            action.submit();
+        });
     });
+
+
 </script>
 
 </body>

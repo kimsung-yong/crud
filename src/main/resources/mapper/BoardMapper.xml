@@ -45,6 +45,7 @@
             )a2
             where rn > (#{pageNum} - 1) * #{amount}
         ]]>
+
     </select>
 
     <insert id="insert">
