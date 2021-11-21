@@ -30,11 +30,11 @@
 
     <select id="list" resultType="vo.BoardVO">
         <![CDATA[
-            select rn as rnum,a2.title, a2.content, a2.writer, a2.regdate, a2.updatedate
+            select rn as rnum,a2.bno,a2.title, a2.content, a2.writer, a2.regdate, a2.updatedate
 	            from
                 (select *
                 from(
-                    select @rnum := @rnum+1 as rn, a.title, a.content, a.writer, a.regdate, a.updatedate
+                    select @rnum := @rnum+1 as rn,a.bno, a.title, a.content, a.writer, a.regdate, a.updatedate
                     from (select @rnum :=0) b ,tbl_board a
 		)a1
 		        where
@@ -45,9 +45,10 @@
             )a2
             where rn > (#{pageNum} - 1) * #{amount}
         ]]>
-
     </select>
-
+    <select id="get" resultType="vo.BoardVO">
+        select * from tbl_board where bno=${bno}
+    </select>
     <insert id="insert">
         insert into tbl_board(typeno,title,content,writer) value(${typeno},#{title},#{content},#{writer})
     </insert>

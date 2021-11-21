@@ -397,9 +397,10 @@
                 </thead>
                 <tbody>
                 <c:forEach items="${boardList}" var="list">
+
                     <tr class="odd gradeX">
                         <td><c:out value="${list.rnum}"/> </td>
-                        <td><c:out value="${list.title}"/></td>
+                        <td><a class="titleClick" href="${list.bno}"><c:out value="${list.title}"/></a></td>
                         <td><c:out value="${list.writer}"/></td>
                         <td class="center"><c:out value="${list.updatedate}"/></td>
                     </tr>
@@ -452,6 +453,10 @@
 
                 </form>
             </div>
+
+            <form name="getForm" id="getForm" method="post">
+                <input type="hidden" name="bno" value="">
+            </form>
 
             <div class="pull-right">
                 <ul class="lpagination" id="page_btn">
@@ -512,6 +517,7 @@
 <script>
     $(document).ready(function() {
         var action = $("#actionForm");
+        var getForm = $("#getForm");
         $('#dataTables-example').DataTable({
             responsive: true
         });
@@ -524,8 +530,19 @@
 
             e.preventDefault();
             action.find("input[name='pageNum']").val($(this).attr("href"));
+            action.attr("method","post");
             action.submit();
         });
+        $('.titleClick').on("click",function (e){
+            e.preventDefault();
+            console.log($(this).attr("href"));
+            action.append("<input type='hidden' name='bno' value='" + $(this).attr("href") + "'>");
+            action.attr("action","modify");
+            action.attr("method","post");
+            action.submit();
+        });
+
+
     });
 
 

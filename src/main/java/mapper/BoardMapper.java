@@ -11,6 +11,8 @@ public interface BoardMapper {
 
     public List<BoardVO> list(Criteria cri);
 
+    public BoardVO get(BoardVO vo);
+
     public int insert(BoardVO vo);
 
     public int update(BoardVO vo);

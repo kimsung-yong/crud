@@ -28,15 +28,12 @@ public class BoardController {
         return mv;
     }
 
-    @RequestMapping("get")
-    public ModelAndView get(){
+    @RequestMapping({"get","modify"})
+    public ModelAndView get(BoardVO vo,Criteria cri){
         ModelAndView mv = new ModelAndView();
-        return mv;
-    }
-
-    @RequestMapping("modity")
-    public ModelAndView modify(){
-        ModelAndView mv = new ModelAndView();
+        mv.setViewName("board/get");
+        mv.addObject("content",service.get(vo));
+        mv.addObject("pageMaker",cri);
         return mv;
     }
     @RequestMapping("remove")

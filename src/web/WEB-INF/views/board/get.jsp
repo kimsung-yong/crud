@@ -379,10 +379,11 @@
     <!-- /.row -->
     <div class="row">
       <form style="align-content: center" name="frm" id="frm" >
-        <input type="text" style="width: 100%" name="title" placeholder="제목을 입력하세요."><br><br>
-        <textarea style="height:400px; width: 100%" name="content" placeholder="내용을 입력하세요."></textarea>
+        <input type="text" style="width: 100%" name="title" id=title placeholder="제목을 입력하세요." value="<c:out value="${content.title}"/>" readonly><br><br>
+        <textarea style="height:400px; width: 100%" name="content" id="content" placeholder="내용을 입력하세요." readonly><c:out value="${content.content}"/> </textarea>
       </form>
-      <button id="reg" style="float: right ">저장</button>
+      <button id="modify" style="float: right ">수정</button>
+      <button id="reg" style="float: right " >저장</button>
     </div>
     <!-- /.row -->
   </div>
@@ -404,10 +405,37 @@
 <script src="/web/resources/dist/js/sb-admin-2.js"></script>
 <script>
   $(function(){
-    $("#reg").on("click",function(){
+    var url = $(location).attr("href");
+    if(url.match("modify")){
+      console.log($(location).attr("href"));
+      $("#modify").show();
+      $("#reg").hide();
+
+      $("#reg").on("click",function(){
         $("#frm").attr("action","/board/save");
         $("#frm").attr("method","post");
         $("#frm").submit();
+      });
+    }else{
+      console.log($(location).attr("href"));
+      $("#modify").hide();
+      $("#reg").show();
+
+      $("#reg").on("click",function(){
+        $("#frm").attr("action","/board/save");
+        $("#frm").attr("method","post");
+        $("#frm").submit();
+      });
+    }
+
+
+    $("#modify").on("click",function(){
+      $("#title").attr("readonly",false);
+      $("#content").attr("readonly",false);
+      $("#reg").show();
+      $("#modify").hide();
+
+
     });
   });
 </script>

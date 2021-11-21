@@ -22,6 +22,11 @@ public class BoardServiceImp implements BoardService {
     }
 
     @Override
+    public BoardVO get(BoardVO vo) {
+        return mapper.get(vo);
+    }
+
+    @Override
     public int totalCount(Criteria cri) {
         return mapper.total(cri);
     }
